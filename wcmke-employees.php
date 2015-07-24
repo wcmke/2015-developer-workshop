@@ -42,7 +42,7 @@ function wcmke_employee_cpt() {
 		'label'               => __( 'wcmke_employee', 'wcmke' ),
 		'description'         => __( 'Employees of WC MKE', 'wcmke' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', ),
+		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', ),
 		'hierarchical'        => false,
 		'public'              => true,
 		'show_ui'             => true,
@@ -116,4 +116,30 @@ function wcmke_departments() {
 // Hook into the 'init' action
 add_action( 'init', 'wcmke_departments', 0 );
 
+}
+
+add_action( 'cmb2_init', 'wcmke_custom_fields' );
+
+function wcmke_custom_fields() {
+	$prefix = 'wcmke_';
+	$employee_data = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox',
+		'title'         => __( 'Employee Data', 'cmb2' ),
+		'object_types'  => array( 'wcmke_employee', ), // Post type
+		) );
+	$employee_data->add_field( array(
+		'name'       => __( 'Job Title', 'cmb2' ),
+		'id'         => $prefix . 'job_title',
+		'type'       => 'text',
+		) );
+	$employee_data->add_field( array(
+		'name'       => __( 'Email', 'cmb2' ),
+		'id'         => $prefix . 'email',
+		'type'       => 'text',
+		) );
+	$employee_data->add_field( array(
+		'name'       => __( 'Phone Number', 'cmb2' ),
+		'id'         => $prefix . 'phone_number',
+		'type'       => 'text',
+		) );
 }
